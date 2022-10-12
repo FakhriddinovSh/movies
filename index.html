@@ -15,19 +15,35 @@
 </style>
 
 <body id="body">
-  <header>
+  <header class="pt-5">
     <div class="container">
-      <form class="search-form" autocomplete="off">
+      <form class="search-form d-flex justify-content-between" autocomplete="off">
         <label>
-
+          
           <input class="search-input form-control " name="user_search" type="text" placeholder="Search movie..." >
-        
         </label>
+        
+        <div class="d-flex">
+          <select class="form-select select">
+            <!-- <option value="categories" selected disabled >Categories</option>
+            <option value="documentary">Documentary</option>
+            <option value="music">Music</option>
+            <option value="adventure">Adventure</option>
+            <option value="animation">Animation</option>
+            <option value="comedy">Comedy</option>
+            <option value="family">Family</option>
+            <option value="fantasy">Fantasy</option>
+            <option value="horror">Horror</option>
+            <option value="drama">Drama</option>
+            <option value="sport">Sport</option> -->
+          </select>
+          <button class="btn btn-success filter-btn">Filter</button>
+        </div>
       </form>
     </div>
   </header>
-
-
+  
+  
   <div class="container">
     <div class="row list-unstyled movie-list mt-5">
       

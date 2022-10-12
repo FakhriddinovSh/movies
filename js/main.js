@@ -1,12 +1,14 @@
 const elList = document.querySelector(".movie-list");
 const elTemplate = document.querySelector(".template").content;
 const fragment = document.createDocumentFragment();
-const myModal = document.querySelector(".modal")
+const myModal = document.querySelector(".modal");
 const searchForm = document.querySelector(".search-form");
-const formInput = document.querySelector(".search-input")
+const formInput = document.querySelector(".search-input");
+const elSelect = document.querySelector(".select");
+const elSelectBtn = document.querySelector(".filter-btn");
 
 const myArr = movies.splice(0, 101);
-console.log(myArr);
+// console.log(myArr);
 function findTime(date){
     return `${Math.floor(date / 60)} hr ${date % 60} min`
 }
@@ -56,33 +58,55 @@ elList.addEventListener("click", function(evt){
     }
 })
 
+// Stop Modal video
 myModal.addEventListener("hidden.bs.modal", function(){
     let modalIframe = document.querySelector(".mymodal-iframe").src = ``
 })
 showMovies(myArr)
 
-
-// formInput.addEventListener("keyup", function(evt){
-//     const valInput = evt.target.value;
-//     const oneArr = movies.filter((item) => {
-//         return item.Title.includes(valInput)
-//     });
-//     showMovies(oneArr)
-// })
-
-
-// let findElement = movies.filter(film =>{
-//     let formInputValue = formInput.value;
-//     return film.Title.includes(formInputValue)
-// })
-
-// showMovies(findElement)
-
-
+// Search movi
 searchForm.addEventListener("keyup", function(evt){
     let elInputVal = formInput.value;
+    let elInputValLower = elInputVal.toLowerCase()
     let searchMovi = myArr.filter(film =>{
-        return film.Title.includes(elInputVal)
+        let finded = film.Title.toLowerCase()
+        return finded.includes(elInputValLower)
     })
     showMovies(searchMovi)
 })
+
+
+function filterMovies(myArr, select){
+    
+    let newSet = new Set();
+    
+    myArr.forEach(category =>{
+        let categoryItem = category.Categories.split("|").join(", ");
+        newSet.add(categoryItem)
+    })
+    
+    // console.log(newSet.size);
+    
+    newSet.forEach(find =>{
+        let option = document.createElement("option");
+        option.value = find.split(",", 1);
+        option.textContent = find.split(",", 1);
+        select.appendChild(option)
+    })
+    
+    elSelectBtn.addEventListener("click", function(evt){
+        evt.preventDefault();
+        
+        const selectValue = select.value;
+        // console.log(selectValue);
+        const findCategori = myArr.filter(item =>{
+            return item.Categories.includes(selectValue)
+        })
+        showMovies(findCategori)
+        
+    })
+    
+}
+
+
+filterMovies(myArr, elSelect)
