@@ -109,7 +109,6 @@ function filterMovies(myArr, select){
     
     elSelectBtn.addEventListener("click", function(evt){
         evt.preventDefault();
-        
         const selectValue = select.value;
         const findCategori = myArr.filter(item =>{
             return item.Categories.includes(selectValue)
@@ -127,7 +126,8 @@ ratingForm.addEventListener("keyup", function(evt){
     // console.log(elInputValNum)
     
     const findRating = myArr.filter(item =>{
-        return item.imdb_rating === elInputValNum
+        return item.imdb_rating >= elInputValNum
+        // return item.imdb_rating === elInputValNum
     })
     showMovies(findRating)
 })
