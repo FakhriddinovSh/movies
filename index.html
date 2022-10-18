@@ -19,26 +19,36 @@
     <div class="container">
       <form class="search-form d-flex justify-content-between" autocomplete="off">
         <label>
-          
           <input class="search-input form-control " name="user_search" type="text" placeholder="Search movie..." >
         </label>
         
         <div class="d-flex">
-          <select class="form-select select">
-            <!-- <option value="categories" selected disabled >Categories</option>
-            <option value="documentary">Documentary</option>
-            <option value="music">Music</option>
-            <option value="adventure">Adventure</option>
-            <option value="animation">Animation</option>
-            <option value="comedy">Comedy</option>
-            <option value="family">Family</option>
-            <option value="fantasy">Fantasy</option>
-            <option value="horror">Horror</option>
-            <option value="drama">Drama</option>
-            <option value="sport">Sport</option> -->
+          <select class="form-select select me-3">
           </select>
           <button class="btn btn-success filter-btn">Filter</button>
         </div>
+      </form>
+
+
+      <form class="rating-form my-2">
+        <label>
+          <input class="rating-input form-control" name="user_rating" type="number" placeholder="Search from rating...">
+        </label>
+      </form>
+
+      <form class="from-form d-block">
+        <input class="from-input form-control mb-2" type="number" name="user_from" placeholder="From..." style="width: 205px;">
+        </label>
+        <label>
+          <input class="to-input form-control" type="number" name="user_to" placeholder="To...">
+      </form>
+
+      <form class="sort-form mt-2">
+        <select class="sort-select w-100 form-select">
+          <option value="sort">Sort by character</option>
+          <option class="sort-select-a" value="a-z">A-Z</option>
+          <option class="sort-select-z" value="z-a">Z-A</option>
+        </select>
       </form>
     </div>
   </header>

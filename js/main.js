@@ -3,12 +3,22 @@ const elTemplate = document.querySelector(".template").content;
 const fragment = document.createDocumentFragment();
 const myModal = document.querySelector(".modal");
 const searchForm = document.querySelector(".search-form");
+const ratingForm = document.querySelector(".rating-form");
+const fromForm = document.querySelector(".from-form");
+const sortForm = document.querySelector(".sort-form");
+const sortSelect = document.querySelector(".sort-select")
+const sortSelectA = document.querySelector(".sort-select-a");
+const sortSelectZ = document.querySelector(".sort-select-z");
 const formInput = document.querySelector(".search-input");
+const formInputRating = document.querySelector(".rating-input");
+const fromInputRating = document.querySelector(".from-input");
+const toInputRating = document.querySelector(".to-input");
 const elSelect = document.querySelector(".select");
 const elSelectBtn = document.querySelector(".filter-btn");
 
+
 const myArr = movies.splice(0, 101);
-// console.log(myArr);
+
 function findTime(date){
     return `${Math.floor(date / 60)} hr ${date % 60} min`
 }
@@ -66,6 +76,7 @@ showMovies(myArr)
 
 // Search movi
 searchForm.addEventListener("keyup", function(evt){
+    evt.preventDefault();
     let elInputVal = formInput.value;
     let elInputValLower = elInputVal.toLowerCase()
     let searchMovi = myArr.filter(film =>{
@@ -75,19 +86,21 @@ searchForm.addEventListener("keyup", function(evt){
     showMovies(searchMovi)
 })
 
-
+// Select option filter
+let genres = []
 function filterMovies(myArr, select){
-    
-    let newSet = new Set();
-    
-    myArr.forEach(category =>{
-        let categoryItem = category.Categories.split("|").join(", ");
-        newSet.add(categoryItem)
+    myArr.forEach(film =>{
+        const genresMovies = film.Categories.split("|")
+        
+        genresMovies.forEach(categorie =>{
+            if(!genres.includes(categorie)){
+                genres.push(categorie)
+            }
+        })
     })
+    genres.sort()
     
-    // console.log(newSet.size);
-    
-    newSet.forEach(find =>{
+    genres.forEach(find =>{
         let option = document.createElement("option");
         option.value = find.split(",", 1);
         option.textContent = find.split(",", 1);
@@ -98,15 +111,52 @@ function filterMovies(myArr, select){
         evt.preventDefault();
         
         const selectValue = select.value;
-        // console.log(selectValue);
         const findCategori = myArr.filter(item =>{
             return item.Categories.includes(selectValue)
         })
         showMovies(findCategori)
-        
     })
-    
 }
-
-
 filterMovies(myArr, elSelect)
+
+// Rating search
+ratingForm.addEventListener("keyup", function(evt){
+    evt.preventDefault();
+    let elInputVal = formInputRating.value;
+    let elInputValNum = Number(elInputVal);
+    // console.log(elInputValNum)
+    
+    const findRating = myArr.filter(item =>{
+        return item.imdb_rating === elInputValNum
+    })
+    showMovies(findRating)
+})
+
+// From and To fn
+fromForm.addEventListener("keyup", function(evt){
+    evt.preventDefault()
+    let elInputValFrom = fromInputRating.value;
+    let elInputValTo = toInputRating.value;
+    //  console.log(`From: ${elInputValFrom} To: ${elInputValTo}`)
+    
+    const findYear = myArr.filter(item =>{
+        return elInputValFrom < item.movie_year && elInputValTo > item.movie_year
+    })
+    showMovies(findYear)
+})
+
+
+
+// Sort a-z
+sortSelect.addEventListener("click", function(evt){
+
+    if (evt.target.value == "a-z") {
+        let sortName = myArr.sort((a, b) => a.Title.charCodeAt(0) - b.Title.charCodeAt(0)); 
+        showMovies(sortName);
+    }
+    if (evt.target.value == "z-a") {
+        let sortName = myArr.sort((a, b) => b.Title.charCodeAt(0) - a.Title.charCodeAt(0)); 
+        showMovies(sortName);
+    }
+
+})
